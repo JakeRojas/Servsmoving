@@ -109,35 +109,28 @@ import Footer from '../components/Footer.astro';
                                 `🔗 Client FB: ${fbLink}`;
                 
                 // Facebook Account: jacalan.ma.louise
-                const shareData = {
-                  title: 'New Moving Quote Request',
-                  text: message
-                };
+                const encodedMsg = encodeURIComponent(message);
+                
+                // Copy to clipboard silently as backup
+                navigator.clipboard.writeText(message).catch(() => {});
 
-                if (navigator.share && navigator.canShare(shareData)) {
-                  // This opens the native share menu on mobile/modern browsers
-                  // User selects Messenger, and the text is automatically pre-filled.
-                  navigator.share(shareData)
-                    .then(() => alert('Opening sharing options... Choose Messenger to send your quote!'))
-                    .catch((err) => {
-                      console.error('Share failed:', err);
-                      openMessengerFallback(message);
-                    });
+                // Mobile Deep Link for Messenger App
+                const messengerAppUrl = `fb-messenger://share?link=${encodedMsg}`;
+                // Universal Web/App Redirect
+                const mMeUrl = `https://m.me/jacalan.ma.louise?text=${encodedMsg}`;
+
+                // Logic: Try to open the messenger app directly, otherwise fall back to browser m.me
+                if (/iPhone|Android/i.test(navigator.userAgent)) {
+                  window.location.href = messengerAppUrl;
+                  // If messengerAppUrl fails to open (app not installed), manually redirect after a short delay
+                  setTimeout(() => {
+                    window.open(mMeUrl, '_blank');
+                  }, 500);
                 } else {
-                  // Fallback for desktop/unsupported browsers
-                  openMessengerFallback(message);
+                  window.open(mMeUrl, '_blank');
                 }
 
-                function openMessengerFallback(msg) {
-                  const encodedMsg = encodeURIComponent(msg);
-                  navigator.clipboard.writeText(msg).then(() => {
-                    // Try to pre-fill via URL, but keep clipboard as backup because FB is inconsistent
-                    window.open(`https://www.facebook.com/messages/t/jacalan.ma.louise?text=${encodedMsg}`, '_blank');
-                    alert('Quote details copied! Opening Messenger. If the text didn\'t appear automatically, just paste it.');
-                  }).catch(() => {
-                    window.open(`https://www.facebook.com/messages/t/jacalan.ma.louise?text=${encodedMsg}`, '_blank');
-                  });
-                }
+                alert('Sending to Messenger... If the app opens and the message isn\'t automatically typed, just PASTE it!');
               });
             </script>
           </div>
