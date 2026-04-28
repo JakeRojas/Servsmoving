@@ -35,7 +35,7 @@ import Footer from '../components/Footer.astro';
                 <div class="icon">✉️</div>
                 <div>
                   <h3>Email</h3>
-                  <p>servsmovingllc@gmail.com</p>
+                  <p>jakeianrojas@gmail.com</p>
                 </div>
               </div>
               
@@ -51,76 +51,48 @@ import Footer from '../components/Footer.astro';
           
           <div class="contact-form-panel glass-panel animate-scale-in delay-200">
             <h2 style="font-size: 2rem; margin-bottom: 2rem;">Request a Free Quote</h2>
-            <form class="contact-form" id="quoteForm">
+            <form class="contact-form" action="https://formsubmit.co/jakeianrojas@gmail.com" method="POST">
+              <!-- FormSubmit Configuration -->
+              <input type="hidden" name="_subject" value="New Moving Quote Request">
+              <input type="hidden" name="_template" value="table">
+              <input type="hidden" name="_next" value={Astro.url.origin + "/contact"}>
+
               <div class="grid grid-2" style="gap: 1.5rem; margin-bottom: 1.5rem;">
                 <div class="form-group" style="margin-bottom: 0;">
                   <label for="name">Name</label>
-                  <input type="text" id="name" required placeholder="John Doe">
+                  <input type="text" name="name" id="name" required placeholder="John Doe">
                 </div>
                 
                 <div class="form-group" style="margin-bottom: 0;">
                   <label for="phone">Phone Number</label>
-                  <input type="tel" id="phone" required placeholder="0907-888-0557">
+                  <input type="tel" name="phone" id="phone" required placeholder="0907-888-0557">
                 </div>
               </div>
 
               <div class="grid grid-2" style="gap: 1.5rem; margin-bottom: 1.5rem;">
                 <div class="form-group" style="margin-bottom: 0;">
                   <label for="moving-from">Moving From</label>
-                  <input type="text" id="moving-from" required placeholder="Current Address">
+                  <input type="text" name="moving_from" id="moving-from" required placeholder="Current Address">
                 </div>
                 
                 <div class="form-group" style="margin-bottom: 0;">
                   <label for="moving-to">Moving To</label>
-                  <input type="text" id="moving-to" required placeholder="Destination Address">
+                  <input type="text" name="moving_to" id="moving-to" required placeholder="Destination Address">
                 </div>
               </div>
 
               <div class="form-group">
                 <label for="email">Email Address</label>
-                <input type="email" id="email" required placeholder="name@example.com">
+                <input type="email" name="email" id="email" required placeholder="name@example.com">
               </div>
 
               <div class="form-group">
                 <label for="fb-link">Your Facebook Profile Link</label>
-                <input type="url" id="fb-link" required placeholder="https://facebook.com/yourprofile">
+                <input type="url" name="fb_link" id="fb-link" required placeholder="https://facebook.com/yourprofile">
               </div>
               
               <button type="submit" class="btn-primary" style="width: 100%;">Submit Request</button>
             </form>
-
-            <script is:inline>
-              document.getElementById('quoteForm')?.addEventListener('submit', (e) => {
-                e.preventDefault();
-                
-                const name = document.getElementById('name').value;
-                const phone = document.getElementById('phone').value;
-                const movingFrom = document.getElementById('moving-from').value;
-                const movingTo = document.getElementById('moving-to').value;
-                const email = document.getElementById('email').value;
-                const fbLink = document.getElementById('fb-link').value;
-                
-                const message = `🚚 NEW QUOTE REQUEST\n\n` +
-                                `👤 Name: ${name}\n` +
-                                `📞 Phone: ${phone}\n` +
-                                `📧 Email: ${email}\n` +
-                                `🏠 Moving From: ${movingFrom}\n` +
-                                `📍 Moving To: ${movingTo}\n` +
-                                `🔗 Client FB: ${fbLink}`;
-                
-                // Facebook Account: jacalan.ma.louise
-                const encodedMsg = encodeURIComponent(message);
-                
-                // Copy to clipboard silently as the ultimate fallback
-                navigator.clipboard.writeText(message).catch(() => {});
-
-                // Using messenger.com which is often more reliable for text pre-filling than facebook.com
-                const messengerUrl = `https://www.messenger.com/t/jacalan.ma.louise?text=${encodedMsg}`;
-
-                // Open Messenger
-                window.open(messengerUrl, '_blank');
-              });
-            </script>
           </div>
         </div>
       </div>
