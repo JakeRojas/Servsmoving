@@ -114,12 +114,10 @@ import Footer from '../components/Footer.astro';
                 // Copy to clipboard silently as the ultimate fallback
                 navigator.clipboard.writeText(message).catch(() => {});
 
-                // Universal Messenger URL
-                const messengerUrl = `https://m.me/jacalan.ma.louise?text=${encodedMsg}`;
+                // Using messenger.com which is often more reliable for text pre-filling than facebook.com
+                const messengerUrl = `https://www.messenger.com/t/jacalan.ma.louise?text=${encodedMsg}`;
 
-                // Open Messenger in a new tab
-                // On mobile, this will automatically prompt to open the app
-                // On desktop, it will open the chat with jacalan.ma.louise
+                // Open Messenger
                 window.open(messengerUrl, '_blank');
               });
             </script>
