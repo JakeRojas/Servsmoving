@@ -1,0 +1,70 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout title="Gallery | SERVSMOVING LLC">
+  <Header />
+
+  <main class="page-main">
+    <section class="section header-section">
+      <div class="container center">
+        <span class="section-subtitle">OUR WORK</span>
+        <h1 class="page-title">Gallery</h1>
+        <p class="section-description">A look at some of the moves we've completed recently across the Bay Area.</p>
+      </div>
+    </section>
+
+    <section class="section gallery-section" style="padding-top: 0;">
+      <div class="container">
+        <div class="grid grid-3 gallery-grid">
+          {
+            [1, 2, 3, 4, 5, 6].map((i) => (
+              <div class={`gallery-item glass-panel animate-fade-in-up delay-${(i % 3 + 1) * 100}`}>
+                <div class="img-wrapper">
+                  <div class="img-placeholder">Image {i}</div>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>
+
+<style>
+  .page-main {
+    padding-top: 100px;
+  }
+  
+  .header-section {
+    padding: 4rem 0;
+  }
+
+  .page-title {
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+    background: linear-gradient(to right, var(--text-main), var(--text-muted));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .gallery-item {
+    overflow: hidden;
+    padding: 0.5rem;
+  }
+
+  .img-wrapper {
+    height: 300px;
+    background: var(--bg-color);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+  }
+</style>

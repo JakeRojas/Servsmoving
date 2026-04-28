@@ -1,0 +1,504 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+// Move to next stage - creating Hero and other sections natively inside index.astro
+---
+
+<Layout title="SERVSMOVING LLC | Save Better, Move Better">
+  <Header />
+
+  <main>
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero-bg">
+        <div class="glow glow-1"></div>
+        <div class="glow glow-2"></div>
+      </div>
+      <div class="container hero-container">
+        <div class="hero-content">
+          <span class="badge animate-fade-in-up">Licensed in Bay Area</span>
+          <h1 class="hero-title animate-fade-in-up delay-100">
+            SAVE <span class="text-gradient">BETTER</span>,<br />
+            MOVE <span class="text-gradient">BETTER</span>
+          </h1>
+          <p class="hero-subtitle animate-fade-in-up delay-200">
+            Bay Area, Alameda County, Livermore, Pleasanton, Dublin. <br/>
+            Stress-free moving experiences for individuals and businesses.
+          </p>
+          <div class="hero-actions animate-fade-in-up delay-300">
+            <a href="/contact" class="btn-primary">Get a Free Quote</a>
+            <a href="tel:9255801513" class="btn-outline">Call 925-580-1513</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section about-section">
+      <div class="container">
+        <div class="grid grid-2 about-grid">
+          <div class="about-content animate-fade-in-up">
+            <span class="section-subtitle">OUR MOVING STORY</span>
+            <h2 class="section-title" style="text-align: left; margin-bottom: 2rem;">Moving you forward with care</h2>
+            <p class="about-text">
+              Founded in June 2024, Servsmoving LLC was established with a vision to provide seamless, stress-free moving experiences. Our mission is to deliver exceptional service, ensuring every move is handled with the utmost care and professionalism.
+            </p>
+            <p class="about-text">
+              We understand that moving can be daunting. That's why we've assembled a team of experienced professionals dedicated to making your transition smooth. Whether relocating your home, office, or specialty items, we tailor our services to unique needs.
+            </p>
+            <a href="/about" class="btn-outline" style="margin-top: 1rem;">Learn More About Us</a>
+          </div>
+          <div class="about-visual animate-scale-in delay-200">
+            <div class="glass-panel image-placeholder">
+              <div class="blob-bg"></div>
+              <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Moving Boxes" class="about-img" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="section services-section">
+      <div class="container">
+        <span class="section-subtitle center">PREMIUM SERVICES</span>
+        <h2 class="section-title">Comprehensive Moving Solutions</h2>
+        <p class="section-description center">From furniture relocation to full-house moves, we offer a range of services to make your move smooth.</p>
+        
+        <div class="grid grid-4 services-grid">
+          { 
+            [
+              { title: "Local Moves", desc: "Efficient and safe moving within the Bay Area.", icon: "home" },
+              { title: "Long-Distance", desc: "Reliable transport for your journey ahead.", icon: "truck" },
+              { title: "Full-Service", desc: "Packing, loading, and unloading handled by pros.", icon: "package" },
+              { title: "Specialty Items", desc: "Careful moving for pianos, safes, and antiques.", icon: "star" }
+            ].map((service, i) => (
+              <div class={`service-card glass-panel animate-fade-in-up delay-${(i+1)*100}`}>
+                <div class="service-icon-wrap">
+                  <div class="service-icon-bg"></div>
+                  <span class="icon-placeholder">✦</span>
+                </div>
+                <h3>{service.title}</h3>
+                <p>{service.desc}</p>
+                <a href="/contact" class="service-link">View Details <span class="arrow">→</span></a>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- Why Us Section -->
+    <section class="section stats-section">
+      <div class="container border-container glass-panel">
+        <div class="grid grid-4">
+          <div class="stat-item">
+            <h3 class="stat-number">Free</h3>
+            <p class="stat-label">Estimates</p>
+          </div>
+          <div class="stat-item">
+            <h3 class="stat-number">Flat</h3>
+            <p class="stat-label">Rates Available</p>
+          </div>
+          <div class="stat-item">
+            <h3 class="stat-number">100%</h3>
+            <p class="stat-label">On Time</p>
+          </div>
+          <div class="stat-item">
+            <h3 class="stat-number">24/7</h3>
+            <p class="stat-label">Emergency Service</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="section testimonials-section">
+      <div class="container">
+        <span class="section-subtitle center">CUSTOMER FEEDBACK</span>
+        <h2 class="section-title">Our Happy Customers</h2>
+        
+        <div class="grid grid-3 testimonials-grid">
+          <div class="testimonial-card glass-panel animate-fade-in-up delay-100">
+            <div class="stars">★★★★★</div>
+            <p class="quote">"I want to recognize a well professional mover... Gio and his team responded right away, provided a reasonable estimate... Got the job done quickly and safely."</p>
+            <div class="author">
+              <h4>Customer</h4>
+              <span>Dublin, CA</span>
+            </div>
+          </div>
+          
+          <div class="testimonial-card glass-panel animate-fade-in-up delay-200">
+            <div class="stars">★★★★★</div>
+            <p class="quote">"We called Gio to help move a very large, very heavy refrigerator... Gio and his partner worked really hard and managed to get the fridge out... extremely polite and professional."</p>
+            <div class="author">
+              <h4>Customer</h4>
+              <span>Dublin, CA</span>
+            </div>
+          </div>
+          
+          <div class="testimonial-card glass-panel animate-fade-in-up delay-300">
+            <div class="stars">★★★★★</div>
+            <p class="quote">"Just moved from NJ to Dublin, CA and luckily came across Gio. He is an amazing professional and we are so lucky to have found him. A real hidden gem."</p>
+            <div class="author">
+              <h4>Customer</h4>
+              <span>Dublin, CA</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- CTA Banner -->
+    <section class="cta-banner">
+      <div class="container cta-container">
+        <div class="cta-content">
+          <h2>Ready for your next move?</h2>
+          <p>Reach out to us today for a free quote and let us help you.</p>
+        </div>
+        <div class="cta-action">
+          <a href="/contact" class="btn-primary">Contact Us Now</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>
+
+<style>
+  /* Hero Styles */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding-top: 80px;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background: radial-gradient(circle at center, #111116 0%, #050505 100%);
+  }
+
+  .glow {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(100px);
+    opacity: 0.15;
+    animation: drift 20s infinite alternate linear;
+  }
+
+  .glow-1 {
+    top: -10%;
+    right: -5%;
+    width: 600px;
+    height: 600px;
+    background-color: var(--accent);
+  }
+
+  .glow-2 {
+    bottom: -20%;
+    left: -10%;
+    width: 500px;
+    height: 500px;
+    background-color: #3b82f6; /* Blue secondary accent */
+    animation-delay: -10s;
+  }
+
+  @keyframes drift {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(100px, 50px); }
+  }
+
+  .hero-content {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .badge {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    border-radius: 99px;
+    background: rgba(245, 158, 11, 0.1);
+    color: var(--accent);
+    font-size: 0.875rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+    border: 1px solid rgba(245, 158, 11, 0.2);
+  }
+
+  .hero-title {
+    font-size: clamp(3rem, 8vw, 5.5rem);
+    margin-bottom: 1.5rem;
+    letter-spacing: -1px;
+  }
+
+  .hero-subtitle {
+    font-size: 1.25rem;
+    color: var(--text-muted);
+    margin-bottom: 3rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  /* Shared Section Styles */
+  .section-subtitle {
+    display: block;
+    color: var(--accent);
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    font-family: 'Outfit', sans-serif;
+  }
+
+  .center {
+    text-align: center;
+  }
+
+  .section-title.center::after {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .section-title[style*="text-align: left"]::after {
+    left: 0;
+    transform: none;
+  }
+
+  .section-description {
+    color: var(--text-muted);
+    max-width: 600px;
+    margin: 0 auto 4rem;
+    font-size: 1.1rem;
+  }
+
+  /* About */
+  .about-grid {
+    align-items: center;
+  }
+
+  .about-text {
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
+    font-size: 1.1rem;
+  }
+
+  .image-placeholder {
+    position: relative;
+    padding: 1rem;
+    height: 500px;
+    overflow: hidden;
+  }
+
+  .blob-bg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60%;
+    height: 60%;
+    background: var(--accent);
+    filter: blur(80px);
+    opacity: 0.2;
+    z-index: 1;
+  }
+
+  .about-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* Services */
+  .services-section {
+    background-color: var(--bg-surface);
+  }
+
+  .service-card {
+    padding: 2.5rem 2rem;
+    transition: transform 0.3s ease, border-color 0.3s ease, background-color 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .service-card:hover {
+    transform: translateY(-10px);
+    border-color: var(--accent);
+    background-color: rgba(245, 158, 11, 0.05);
+  }
+
+  .service-icon-wrap {
+    position: relative;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .service-icon-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--accent);
+    opacity: 0.1;
+    border-radius: 12px;
+    transform: rotate(10deg);
+    transition: transform 0.3s ease;
+  }
+
+  .service-card:hover .service-icon-bg {
+    transform: rotate(0deg);
+  }
+
+  .icon-placeholder {
+    color: var(--accent);
+    font-size: 1.5rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .service-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .service-card p {
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
+    flex-grow: 1;
+  }
+
+  .service-link {
+    color: var(--text-main);
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: auto;
+  }
+
+  .service-link .arrow {
+    color: var(--accent);
+    transition: transform 0.3s ease;
+  }
+
+  .service-card:hover .service-link .arrow {
+    transform: translateX(5px);
+  }
+
+  /* Stats */
+  .stats-section {
+    padding: 3rem 0;
+  }
+
+  .border-container {
+    padding: 3rem;
+  }
+
+  .stat-item {
+    text-align: center;
+  }
+
+  .stat-number {
+    font-size: 3rem;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+  }
+
+  .stat-label {
+    color: var(--text-muted);
+    font-weight: 500;
+    font-size: 1.1rem;
+  }
+
+  /* Testimonials */
+  .testimonial-card {
+    padding: 2.5rem;
+    position: relative;
+  }
+
+  .stars {
+    color: var(--accent);
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+  }
+
+  .quote {
+    font-style: italic;
+    color: var(--text-main);
+    margin-bottom: 2rem;
+    line-height: 1.8;
+  }
+
+  .author h4 {
+    font-size: 1.1rem;
+    margin-bottom: 0.2rem;
+  }
+
+  .author span {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+  }
+
+  /* CTA Banner */
+  .cta-banner {
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.2) 0%, rgba(10, 10, 12, 1) 100%);
+    padding: 5rem 0;
+    border-top: 1px solid rgba(245, 158, 11, 0.2);
+    border-bottom: 1px solid rgba(245, 158, 11, 0.2);
+  }
+
+  .cta-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 2rem;
+  }
+
+  .cta-content h2 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .cta-content p {
+    color: var(--text-muted);
+    font-size: 1.1rem;
+  }
+
+  @media (max-width: 768px) {
+    .cta-container {
+      text-align: center;
+      flex-direction: column;
+    }
+  }
+</style>
