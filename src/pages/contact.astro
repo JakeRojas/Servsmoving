@@ -111,26 +111,16 @@ import Footer from '../components/Footer.astro';
                 // Facebook Account: jacalan.ma.louise
                 const encodedMsg = encodeURIComponent(message);
                 
-                // Copy to clipboard silently as backup
+                // Copy to clipboard silently as the ultimate fallback
                 navigator.clipboard.writeText(message).catch(() => {});
 
-                // Mobile Deep Link for Messenger App
-                const messengerAppUrl = `fb-messenger://share?link=${encodedMsg}`;
-                // Universal Web/App Redirect
-                const mMeUrl = `https://m.me/jacalan.ma.louise?text=${encodedMsg}`;
+                // Universal Messenger URL
+                const messengerUrl = `https://m.me/jacalan.ma.louise?text=${encodedMsg}`;
 
-                // Logic: Try to open the messenger app directly, otherwise fall back to browser m.me
-                if (/iPhone|Android/i.test(navigator.userAgent)) {
-                  window.location.href = messengerAppUrl;
-                  // If messengerAppUrl fails to open (app not installed), manually redirect after a short delay
-                  setTimeout(() => {
-                    window.open(mMeUrl, '_blank');
-                  }, 500);
-                } else {
-                  window.open(mMeUrl, '_blank');
-                }
-
-                alert('Sending to Messenger... If the app opens and the message isn\'t automatically typed, just PASTE it!');
+                // Open Messenger in a new tab
+                // On mobile, this will automatically prompt to open the app
+                // On desktop, it will open the chat with jacalan.ma.louise
+                window.open(messengerUrl, '_blank');
               });
             </script>
           </div>
