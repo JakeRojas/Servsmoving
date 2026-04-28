@@ -27,7 +27,7 @@ import Footer from '../components/Footer.astro';
                 <div class="icon">📞</div>
                 <div>
                   <h3>Phone</h3>
-                  <p>925-580-1513</p>
+                  <p>0907-888-0557</p>
                 </div>
               </div>
               
@@ -51,34 +51,95 @@ import Footer from '../components/Footer.astro';
           
           <div class="contact-form-panel glass-panel animate-scale-in delay-200">
             <h2 style="font-size: 2rem; margin-bottom: 2rem;">Request a Free Quote</h2>
-            <form class="contact-form" onsubmit="event.preventDefault(); alert('In a real app, this would send your message!');">
-              <div class="form-group">
-                <label for="name">Your Name</label>
-                <input type="text" id="name" required placeholder="John Doe">
+            <form class="contact-form" id="quoteForm">
+              <div class="grid grid-2" style="gap: 1.5rem; margin-bottom: 1.5rem;">
+                <div class="form-group" style="margin-bottom: 0;">
+                  <label for="name">Name</label>
+                  <input type="text" id="name" required placeholder="John Doe">
+                </div>
+                
+                <div class="form-group" style="margin-bottom: 0;">
+                  <label for="phone">Phone Number</label>
+                  <input type="tel" id="phone" required placeholder="0907-888-0557">
+                </div>
               </div>
-              
-              <div class="form-group">
-                <label for="phone">Phone Number</label>
-                <input type="tel" id="phone" required placeholder="(925) 555-5555">
+
+              <div class="grid grid-2" style="gap: 1.5rem; margin-bottom: 1.5rem;">
+                <div class="form-group" style="margin-bottom: 0;">
+                  <label for="moving-from">Moving From</label>
+                  <input type="text" id="moving-from" required placeholder="Current Address">
+                </div>
+                
+                <div class="form-group" style="margin-bottom: 0;">
+                  <label for="moving-to">Moving To</label>
+                  <input type="text" id="moving-to" required placeholder="Destination Address">
+                </div>
               </div>
 
               <div class="form-group">
-                <label for="move-type">Type of Move</label>
-                <select id="move-type">
-                  <option>Local Move</option>
-                  <option>Long-Distance Move</option>
-                  <option>Full-Service Move</option>
-                  <option>Specialty Item Move</option>
-                </select>
+                <label for="email">Email Address</label>
+                <input type="email" id="email" required placeholder="name@example.com">
               </div>
-              
+
               <div class="form-group">
-                <label for="message">Details</label>
-                <textarea id="message" rows="4" placeholder="Tell us about your moving needs..."></textarea>
+                <label for="fb-link">Your Facebook Profile Link</label>
+                <input type="url" id="fb-link" required placeholder="https://facebook.com/yourprofile">
               </div>
               
               <button type="submit" class="btn-primary" style="width: 100%;">Submit Request</button>
             </form>
+
+            <script is:inline>
+              document.getElementById('quoteForm')?.addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                const name = document.getElementById('name').value;
+                const phone = document.getElementById('phone').value;
+                const movingFrom = document.getElementById('moving-from').value;
+                const movingTo = document.getElementById('moving-to').value;
+                const email = document.getElementById('email').value;
+                const fbLink = document.getElementById('fb-link').value;
+                
+                const message = `🚚 NEW QUOTE REQUEST\n\n` +
+                                `👤 Name: ${name}\n` +
+                                `📞 Phone: ${phone}\n` +
+                                `📧 Email: ${email}\n` +
+                                `🏠 Moving From: ${movingFrom}\n` +
+                                `📍 Moving To: ${movingTo}\n` +
+                                `🔗 Client FB: ${fbLink}`;
+                
+                // Facebook Account: jacalan.ma.louise
+                const shareData = {
+                  title: 'New Moving Quote Request',
+                  text: message
+                };
+
+                if (navigator.share && navigator.canShare(shareData)) {
+                  // This opens the native share menu on mobile/modern browsers
+                  // User selects Messenger, and the text is automatically pre-filled.
+                  navigator.share(shareData)
+                    .then(() => alert('Opening sharing options... Choose Messenger to send your quote!'))
+                    .catch((err) => {
+                      console.error('Share failed:', err);
+                      openMessengerFallback(message);
+                    });
+                } else {
+                  // Fallback for desktop/unsupported browsers
+                  openMessengerFallback(message);
+                }
+
+                function openMessengerFallback(msg) {
+                  const encodedMsg = encodeURIComponent(msg);
+                  navigator.clipboard.writeText(msg).then(() => {
+                    // Try to pre-fill via URL, but keep clipboard as backup because FB is inconsistent
+                    window.open(`https://www.facebook.com/messages/t/jacalan.ma.louise?text=${encodedMsg}`, '_blank');
+                    alert('Quote details copied! Opening Messenger. If the text didn\'t appear automatically, just paste it.');
+                  }).catch(() => {
+                    window.open(`https://www.facebook.com/messages/t/jacalan.ma.louise?text=${encodedMsg}`, '_blank');
+                  });
+                }
+              });
+            </script>
           </div>
         </div>
       </div>
