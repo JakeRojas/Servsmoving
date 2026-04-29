@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import FeedbackForm from '../components/FeedbackForm.astro';
 import { CONTACT_INFO } from '../lib/constants';
 
 // Move to next stage - creating Hero and other sections natively inside index.astro
@@ -11,6 +12,18 @@ import { CONTACT_INFO } from '../lib/constants';
   <Header />
 
   <main>
+    <!-- Success Alert -->
+    <div id="success-alert" class="success-alert hidden">
+      <div class="alert-content glass-panel">
+        <div class="alert-icon">✨</div>
+        <div class="alert-text">
+          <h3>Feedback Sent!</h3>
+          <p>Thank you for sharing your experience with us. We appreciate your feedback!</p>
+        </div>
+        <button id="close-alert" class="close-btn">&times;</button>
+      </div>
+    </div>
+
     <!-- Hero Section -->
     <section class="hero">
       <div class="hero-bg">
@@ -151,6 +164,8 @@ import { CONTACT_INFO } from '../lib/constants';
         </div>
       </div>
     </section>
+
+    <FeedbackForm />
     
     <!-- CTA Banner -->
     <section class="cta-banner">
@@ -502,4 +517,121 @@ import { CONTACT_INFO } from '../lib/constants';
       flex-direction: column;
     }
   }
+
+  /* Success Alert Styles */
+  .success-alert {
+    position: fixed;
+    top: 120px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    width: 90%;
+    max-width: 600px;
+    animation: slideDown 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+  }
+
+  .success-alert.hidden {
+    display: none;
+  }
+
+  .alert-content {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.5rem 2rem;
+    border: 1px solid rgba(245, 158, 11, 0.3);
+    background: rgba(10, 10, 12, 0.8);
+    backdrop-filter: blur(12px);
+    border-radius: 16px;
+  }
+
+  .alert-icon {
+    font-size: 2rem;
+    background: rgba(245, 158, 11, 0.1);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent);
+  }
+
+  .alert-text h3 {
+    color: var(--accent);
+    font-size: 1.25rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .alert-text p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+  }
+
+  .close-btn {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 1.5rem;
+    cursor: pointer;
+    margin-left: auto;
+    transition: color 0.3s ease;
+  }
+
+  .close-btn:hover {
+    color: var(--text-main);
+  }
+
+  @keyframes slideDown {
+    from {
+      opacity: 0;
+      transform: translate(-50%, -20px);
+    }
+    to {
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .alert-content {
+      padding: 1rem;
+      gap: 1rem;
+    }
+    .alert-icon {
+      width: 40px;
+      height: 40px;
+      font-size: 1.5rem;
+    }
+  }
 </style>
+
+<script>
+  // Check for success query parameter
+  const urlParams = new URLSearchParams(window.location.search);
+  const isSuccess = urlParams.get('success');
+  const alert = document.getElementById('success-alert');
+  const closeBtn = document.getElementById('close-alert');
+
+  if (isSuccess === 'true' && alert) {
+    alert.classList.remove('hidden');
+    
+    // Auto-hide after 10 seconds
+    const timeout = setTimeout(() => {
+      alert.style.opacity = '0';
+      alert.style.transition = 'opacity 0.5s ease';
+      setTimeout(() => alert.classList.add('hidden'), 500);
+    }, 10000);
+
+    if (closeBtn) {
+      closeBtn.addEventListener('click', () => {
+        alert.classList.add('hidden');
+        clearTimeout(timeout);
+      });
+    }
+
+    // Clean up URL without refreshing the page
+    const newUrl = window.location.pathname;
+    window.history.replaceState({}, document.title, newUrl);
+  }
+</script>

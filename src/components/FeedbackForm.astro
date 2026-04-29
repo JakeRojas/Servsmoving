@@ -1,0 +1,211 @@
+---
+import { CONTACT_INFO } from '../lib/constants';
+---
+
+<section id="feedback" class="section feedback-section">
+  <div class="container">
+    <div class="feedback-layout">
+      <div class="feedback-info animate-fade-in-up">
+        <span class="section-subtitle">SHARE YOUR EXPERIENCE</span>
+        <h2 class="section-title" style="text-align: left; margin-bottom: 1.5rem;">We Value Your Feedback</h2>
+        <p class="feedback-desc">
+          Your satisfaction is our top priority. Tell us about your moving experience—what we did well and how we can improve. Your insights help us maintain the highest standards of service in the Bay Area.
+        </p>
+        
+        <div class="feedback-stats">
+          <div class="feedback-stat">
+            <span class="stat-icon">⭐</span>
+            <div class="stat-text">
+              <strong>Quality Service</strong>
+              <p>We strive for 5-star perfection in every move.</p>
+            </div>
+          </div>
+          <div class="feedback-stat">
+            <span class="stat-icon">💬</span>
+            <div class="stat-text">
+              <strong>Your Voice Matters</strong>
+              <p>Direct communication helps us grow better.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="feedback-card glass-panel animate-scale-in delay-200">
+        <form action={CONTACT_INFO.formSubmitUrl} method="POST" class="feedback-form">
+          <!-- FormSubmit Configuration -->
+          <input type="hidden" name="_subject" value={CONTACT_INFO.formFeedback}>
+          <input type="hidden" name="_template" value="table">
+          <input type="hidden" name="_next" value={Astro.url.origin + "/?success=true#feedback"}>
+
+          <div class="form-group">
+            <label for="feedback-name">Full Name</label>
+            <input type="text" id="feedback-name" name="name" required placeholder="John Doe" />
+          </div>
+          
+          <div class="form-group">
+            <label for="feedback-email">Email Address</label>
+            <input type="email" id="feedback-email" name="email" required placeholder="john@example.com" />
+          </div>
+
+          <div class="form-group">
+            <label for="feedback-message">Your Message</label>
+            <textarea id="feedback-message" name="message" required rows="4" placeholder="How was your experience moving with us?"></textarea>
+          </div>
+
+          <button type="submit" class="btn-primary" style="width: 100%;">Send Feedback</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .feedback-section {
+    position: relative;
+    padding: 8rem 0;
+    overflow: hidden;
+  }
+
+  .feedback-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 40%;
+    height: 100%;
+    background: radial-gradient(circle at center, rgba(245, 158, 11, 0.03), transparent 70%);
+    z-index: -1;
+  }
+
+  .feedback-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  @media (max-width: 991px) {
+    .feedback-layout {
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+    .feedback-info {
+      text-align: center;
+    }
+    .section-title {
+      text-align: center !important;
+    }
+    .section-title::after {
+      left: 50% !important;
+      transform: translateX(-50%) !important;
+    }
+  }
+
+  .feedback-desc {
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    margin-bottom: 2.5rem;
+    max-width: 500px;
+  }
+
+  @media (max-width: 991px) {
+    .feedback-desc {
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+
+  .feedback-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .feedback-stat {
+    display: flex;
+    gap: 1.25rem;
+    align-items: flex-start;
+  }
+
+  @media (max-width: 991px) {
+    .feedback-stat {
+      justify-content: center;
+      text-align: left;
+      max-width: 400px;
+      margin: 0 auto;
+    }
+  }
+
+  .stat-icon {
+    font-size: 1.5rem;
+    background: rgba(245, 158, 11, 0.1);
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    flex-shrink: 0;
+  }
+
+  .stat-text strong {
+    display: block;
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.1rem;
+    margin-bottom: 0.25rem;
+    color: var(--text-main);
+  }
+
+  .stat-text p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+  }
+
+  .feedback-card {
+    padding: 3rem;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  }
+
+  @media (max-width: 640px) {
+    .feedback-card {
+      padding: 2rem 1.5rem;
+    }
+  }
+
+  .form-group {
+    margin-bottom: 1.5rem;
+  }
+
+  .form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    font-size: 0.9rem;
+    color: var(--text-main);
+  }
+
+  .form-group input,
+  .form-group textarea {
+    width: 100%;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    color: var(--text-main);
+    font-family: inherit;
+    transition: all 0.3s ease;
+  }
+
+  .form-group input:focus,
+  .form-group textarea:focus {
+    outline: none;
+    background: rgba(255, 255, 255, 0.06);
+    border-color: var(--accent);
+  }
+
+  .form-group input::placeholder,
+  .form-group textarea::placeholder {
+    color: rgba(255, 255, 255, 0.2);
+  }
+</style>
