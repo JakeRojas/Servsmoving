@@ -66,7 +66,7 @@ import { CONTACT_INFO } from '../lib/constants';
             <h2 style="font-size: 2rem; margin-bottom: 2rem;">Request a Free Quote</h2>
             <form class="contact-form" action={CONTACT_INFO.formSubmitUrl} method="POST">
               <!-- FormSubmit Configuration -->
-              <input type="hidden" name="_subject" value="New Moving Quote Request">
+              <input type="hidden" name="_subject" value={CONTACT_INFO.formSubject}>
               <input type="hidden" name="_template" value="table">
               <input type="hidden" name="_next" value={Astro.site ? new URL('/contact/?success=true', Astro.site).href : Astro.url.origin + "/contact/?success=true"}>
 
