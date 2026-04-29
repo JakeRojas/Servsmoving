@@ -55,7 +55,7 @@ import Footer from '../components/Footer.astro';
               <!-- FormSubmit Configuration -->
               <input type="hidden" name="_subject" value="New Moving Quote Request">
               <input type="hidden" name="_template" value="table">
-              <input type="hidden" name="_next" value={Astro.url.origin + "/contact"}>
+              <input type="hidden" name="_next" value={Astro.site ? new URL('/contact/', Astro.site).href : Astro.url.origin + "/contact/"}>
 
               <div class="grid grid-2" style="gap: 1.5rem; margin-bottom: 1.5rem;">
                 <div class="form-group" style="margin-bottom: 0;">
