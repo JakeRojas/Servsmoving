@@ -1,7 +1,7 @@
----
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import { CONTACT_INFO } from '../lib/constants';
 
 // Move to next stage - creating Hero and other sections natively inside index.astro
 ---
@@ -29,7 +29,7 @@ import Footer from '../components/Footer.astro';
           </p>
           <div class="hero-actions animate-fade-in-up delay-300">
             <a href="/contact" class="btn-primary">Get a Free Quote</a>
-            <a href="tel:09078880557" class="btn-outline">Call 0907-888-0557</a>
+            <a href={`tel:${CONTACT_INFO.phoneRaw}`} class="btn-outline">Call {CONTACT_INFO.phone}</a>
           </div>
         </div>
       </div>

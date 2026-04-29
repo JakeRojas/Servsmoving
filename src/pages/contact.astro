@@ -1,7 +1,7 @@
----
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import { CONTACT_INFO } from '../lib/constants';
 ---
 
 <Layout title="Contact Us | SERVSMOVING LLC">
@@ -39,7 +39,7 @@ import Footer from '../components/Footer.astro';
                 <div class="icon">📞</div>
                 <div>
                   <h3>Phone</h3>
-                  <p>0907-888-0557</p>
+                  <p>{CONTACT_INFO.phone}</p>
                 </div>
               </div>
               
@@ -47,7 +47,7 @@ import Footer from '../components/Footer.astro';
                 <div class="icon">✉️</div>
                 <div>
                   <h3>Email</h3>
-                  <p>jakeianrojas@gmail.com</p>
+                  <p>{CONTACT_INFO.email}</p>
                 </div>
               </div>
               
@@ -63,7 +63,7 @@ import Footer from '../components/Footer.astro';
           
           <div class="contact-form-panel glass-panel animate-scale-in delay-200">
             <h2 style="font-size: 2rem; margin-bottom: 2rem;">Request a Free Quote</h2>
-            <form class="contact-form" action="https://formsubmit.co/jakeianrojas@gmail.com" method="POST">
+            <form class="contact-form" action={CONTACT_INFO.formSubmitUrl} method="POST">
               <!-- FormSubmit Configuration -->
               <input type="hidden" name="_subject" value="New Moving Quote Request">
               <input type="hidden" name="_template" value="table">
@@ -77,7 +77,7 @@ import Footer from '../components/Footer.astro';
                 
                 <div class="form-group" style="margin-bottom: 0;">
                   <label for="phone">Phone Number</label>
-                  <input type="tel" name="phone" id="phone" required placeholder="0907-888-0557">
+                  <input type="tel" name="phone" id="phone" required placeholder={CONTACT_INFO.phone}>
                 </div>
               </div>
 
