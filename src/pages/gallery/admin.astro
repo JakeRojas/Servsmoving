@@ -22,17 +22,27 @@ if (!adminPassword && process.env.NODE_ENV === 'development') {
 }
 
 // Get images from Supabase Storage
-const { data: storageFiles, error: storageError } = await supabase.storage
-  .from('gallery')
-  .list('', {
-    limit: 100,
-    offset: 0,
-    sortBy: { column: 'name', order: 'desc' },
-  });
+let storageFiles: any[] = [];
+let storageError = null;
+
+if (supabase) {
+  const { data, error } = await supabase.storage
+    .from('gallery')
+    .list('', {
+      limit: 100,
+      offset: 0,
+      sortBy: { column: 'name', order: 'desc' },
+    });
+  
+  storageFiles = data || [];
+  storageError = error;
+} else {
+  console.warn('Supabase client not initialized - missing environment variables');
+}
 
 const galleryImages = storageFiles?.map(file => ({
   filename: file.name,
-  src: supabase.storage.from('gallery').getPublicUrl(file.name).data.publicUrl
+  src: supabase ? supabase.storage.from('gallery').getPublicUrl(file.name).data.publicUrl : ''
 })) || [];
 
 if (storageError) {

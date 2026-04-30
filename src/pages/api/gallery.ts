@@ -13,6 +13,10 @@ export const POST: APIRoute = async ({ request }) => {
         return new Response(JSON.stringify({ error: `Unauthorized: Admin password not configured correctly.` }), { status: 401 });
     }
 
+    if (!supabase) {
+        return new Response(JSON.stringify({ error: "Supabase storage is not configured. Check your environment variables." }), { status: 503 });
+    }
+
     if (action === 'upload') {
         const file = data.get('image') as File;
         if (!file) {
