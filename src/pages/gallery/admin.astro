@@ -3,11 +3,17 @@ import Layout from '../../layouts/Layout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 
+import { ADMIN_CONFIG } from '../../lib/constants';
+
 export const prerender = false;
 
-const adminPassword = import.meta.env.ADMIN_PASSWORD || process.env.ADMIN_PASSWORD;
+const adminPassword = ADMIN_CONFIG.password;
 const cookiePass = Astro.cookies.get('admin_pass')?.value;
-const isAdmin = adminPassword && cookiePass === adminPassword;
+const isAdmin = adminPassword && cookiePass && cookiePass.trim() === adminPassword.trim();
+
+// Show error if user attempted to login but failed
+const loginAttempted = !!cookiePass;
+const loginFailed = loginAttempted && !isAdmin;
 
 if (!adminPassword && process.env.NODE_ENV === 'development') {
   console.error('CRITICAL ERROR: ADMIN_PASSWORD is not set in .env. Login will not work.');
@@ -31,6 +37,12 @@ const galleryImages = Object.entries(images).map(([path, data]) => ({
         <span class="section-subtitle">ADMIN PANEL</span>
         <h1 class="page-title">Gallery Management</h1>
         <p class="section-description">Upload and organize images for the public gallery.</p>
+        
+        {!adminPassword && (
+          <div class="error-banner glass-panel" style="margin-top: 2rem; border-color: #ef4444;">
+            <p style="color: #ef4444; font-weight: bold;">⚠️ Server Configuration Error: ADMIN_PASSWORD is missing in .env</p>
+          </div>
+        )}
       </div>
     </section>
 
@@ -42,10 +54,14 @@ const galleryImages = Object.entries(images).map(([path, data]) => ({
             <form id="login-form">
               <div class="form-group">
                 <label for="password">Password</label>
-                <input type="password" id="password" required placeholder="Enter admin password" />
+                <input type="password" id="password" required placeholder="Enter admin password" autocomplete="current-password" />
               </div>
-              <button type="submit" class="btn-primary" style="width: 100%;">Login</button>
-              <p id="login-error" class="error-msg hidden">Incorrect password. Please try again.</p>
+              <button type="submit" class="btn-primary" style="width: 100%;" disabled={!adminPassword}>
+                {adminPassword ? 'Login' : 'Login Disabled'}
+              </button>
+              {loginFailed && (
+                <p id="login-error" class="error-msg">Incorrect password. Please try again.</p>
+              )}
             </form>
           </div>
         ) : (

@@ -6,3 +6,8 @@ export const CONTACT_INFO = {
     formSubject: import.meta.env.PUBLIC_FORMSUBMIT_REQUEST || "New Moving Quote Request",
     formFeedback: import.meta.env.PUBLIC_FORMSUBMIT_FEEDBACK || "New Customer's Feedback",
 };
+
+export const ADMIN_CONFIG = {
+    // Only available on the server
+    password: import.meta.env.ADMIN_PASSWORD,
+};

@@ -4,17 +4,19 @@ import path from 'node:path';
 
 export const prerender = false;
 
+import { ADMIN_CONFIG } from '../../lib/constants';
+
 // Path to the gallery images in the source directory
 const GALLERY_DIR = path.resolve('src/assets/gallery');
 
 export const POST: APIRoute = async ({ request }) => {
     const data = await request.formData();
     const action = data.get('action');
-    const password = data.get('password');
+    const password = data.get('password')?.toString().trim();
 
     // Basic password check
-    const adminPassword = import.meta.env.ADMIN_PASSWORD || process.env.ADMIN_PASSWORD;
-    if (!adminPassword || password !== adminPassword) {
+    const adminPassword = ADMIN_CONFIG.password;
+    if (!adminPassword || password !== adminPassword.trim()) {
         return new Response(JSON.stringify({ error: `Unauthorized: Admin password not configured correctly.` }), { status: 401 });
     }
 
