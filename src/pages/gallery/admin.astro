@@ -5,6 +5,8 @@ import Footer from '../../components/Footer.astro';
 
 import { ADMIN_CONFIG } from '../../lib/constants';
 
+import { supabase } from '../../lib/supabase';
+
 export const prerender = false;
 
 const adminPassword = ADMIN_CONFIG.password;
@@ -19,13 +21,23 @@ if (!adminPassword && process.env.NODE_ENV === 'development') {
   console.error('CRITICAL ERROR: ADMIN_PASSWORD is not set in .env. Login will not work.');
 }
 
-// Get all images in the gallery
-const images = import.meta.glob<{ default: ImageMetadata }>('/src/assets/gallery/*.{png,jpg,jpeg,webp,svg}', { eager: true });
-const galleryImages = Object.entries(images).map(([path, data]) => ({
-  path,
-  filename: path.split('/').pop(),
-  src: data.default
-}));
+// Get images from Supabase Storage
+const { data: storageFiles, error: storageError } = await supabase.storage
+  .from('gallery')
+  .list('', {
+    limit: 100,
+    offset: 0,
+    sortBy: { column: 'name', order: 'desc' },
+  });
+
+const galleryImages = storageFiles?.map(file => ({
+  filename: file.name,
+  src: supabase.storage.from('gallery').getPublicUrl(file.name).data.publicUrl
+})) || [];
+
+if (storageError) {
+  console.error('Supabase Storage Error:', storageError);
+}
 ---
 
 <Layout title="Gallery Admin | SERVSMOVING LLC">
@@ -82,7 +94,7 @@ const galleryImages = Object.entries(images).map(([path, data]) => ({
             {galleryImages.map((img, i) => (
               <div class={`gallery-item glass-panel animate-fade-in-up delay-${(i % 3 + 1) * 100}`} data-filename={img.filename}>
                 <div class="img-wrapper">
-                  <img src={img.src.src} alt={img.filename} loading="lazy" />
+                  <img src={img.src} alt={img.filename} loading="lazy" />
                   <button class="delete-btn" aria-label="Delete Image" data-filename={img.filename}>
                     <span class="trash-icon">🗑️</span>
                   </button>
@@ -310,14 +322,16 @@ const galleryImages = Object.entries(images).map(([path, data]) => ({
           body: formData
         });
 
+        const result = await res.json();
+
         if (res.ok) {
           window.location.reload();
         } else {
-          alert('Upload failed. Please check your password.');
+          alert(`Upload failed: ${result.error || 'Check your password or server config.'}`);
           overlay?.classList.add('hidden');
         }
       } catch (err) {
-        alert('An error occurred during upload.');
+        alert('An error occurred during upload. Check your connection.');
         overlay?.classList.add('hidden');
       }
     });

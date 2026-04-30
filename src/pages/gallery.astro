@@ -3,12 +3,25 @@ import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 
-// Get all images in the gallery
-const images = import.meta.glob<{ default: ImageMetadata }>('/src/assets/gallery/*.{png,jpg,jpeg,webp,svg}', { eager: true });
-const galleryImages = Object.entries(images).map(([path, data]) => ({
-  path,
-  src: data.default
-}));
+import { supabase } from '../lib/supabase';
+
+// Get images from Supabase Storage
+const { data: storageFiles, error: storageError } = await supabase.storage
+  .from('gallery')
+  .list('', {
+    limit: 100,
+    offset: 0,
+    sortBy: { column: 'name', order: 'desc' },
+  });
+
+const galleryImages = storageFiles?.map(file => ({
+  filename: file.name,
+  src: supabase.storage.from('gallery').getPublicUrl(file.name).data.publicUrl
+})) || [];
+
+if (storageError) {
+  console.error('Supabase Storage Error:', storageError);
+}
 ---
 
 <Layout title="Gallery | SERVSMOVING LLC">
@@ -30,7 +43,7 @@ const galleryImages = Object.entries(images).map(([path, data]) => ({
             galleryImages.map((img, i) => (
               <div class={`gallery-item glass-panel animate-fade-in-up delay-${(i % 3 + 1) * 100}`}>
                 <div class="img-wrapper">
-                  <img src={img.src.src} alt="Gallery image" loading="lazy" />
+                  <img src={img.src} alt="Gallery image" loading="lazy" />
                 </div>
               </div>
             ))
